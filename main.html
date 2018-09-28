@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Shadow Chrome</title>
+
+    <link rel="stylesheet" href="lib/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="lib/bootstrap-switch.min.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="main.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+
+
+
+
+<div class="container main-frame">
+
+    <div class="panel panel-default" style="margin-bottom: 0px">
+        <div class="panel-heading">
+            连接设置
+        </div>
+        <div class="panel-body" style="padding: 10px">
+            <div class="input-group input-group-sm">
+                <span class="input-group-addon " style="width: 40%">sock IP</span>
+                <input type="text"  id="input-ip" class="form-control" placeholder="socks ip" value="127.0.0.1">
+            </div>
+
+            <br/>
+            <div class="input-group input-group-sm">
+                <span class="input-group-addon" style="width: 40%">sock Port</span>
+                <input type="text" id="input-port"class="form-control" placeholder="socks port" value="1080">
+            </div>
+
+            <br/>
+            <div class="btn-group btn-group-justified">
+                <a href="#" class="btn btn-default" id="connectbtn"><i class="fa fa-play font_awsome"></i>连接</a>
+                <a href="#" class="btn btn-default" id="disconnect" disabled="disabled"><i class="fa fa-stop font_awsome"></i>断开</a>
+            </div>
+            <div class="btn-group btn-group-justified" style="margin-left: 0px;margin-top: 5px">
+                <a href="#" class="btn btn-default" id="refresh-gfw-btn"><i class="fa fa-refresh font_awsome"></i>更新GFW</a>
+                <a href="#" class="btn btn-default" ><i class="fa fa-cog font_awsome"></i>设置</a>
+            </div>
+            <div>
+                <label id="msg-label" style="margin:0px;margin-top: 10px;background:red;width:100%;display: none" >value="warning"</label>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default" style="margin-bottom: 0px">
+        <div class="panel-heading">
+            代理设置
+        </div>
+        <div class="panel-body" style="padding: 10px">
+
+            <!--<div class="row" style="margin: 0px;">-->
+            <!--<div class="col-md-4 aj-label" style="padding: 0px;">-->
+            <!--<label style="margin-bottom: 0px;text-align: center">全局设置</label>-->
+            <!--</div>-->
+            <!--<div class="switch switch-small col-md-7 " align="left">-->
+            <!--<input type="checkbox" class="my-switch" name="check-global" value="0" checked="false" style="margin-left: 5px"/>-->
+            <!--</div>-->
+            <!--</div>-->
+
+            <div>
+                <label>全局设置
+                    <input type="checkbox" id='global-switch' name="check-global" value="0" checked="false" />
+                </label>
+            </div>
+
+
+            <div style="margin-top: 10px">
+                <div class="input-group input-group-sm" style="margin-top: 5px">
+                    <span class="input-group-addon " >URL</span>
+                    <input type="text"  class="form-control" placeholder="Twitterhandle" value="www.google.com">
+                </div>
+            </div>
+
+            <div style="margin-top: 15px">
+                <label>
+                    代理状态
+                    <label class="radio-inline" style="height: 23px;margin-left: 15px">
+                        <input type="radio" name="optionsRadiosinline" id="optionsRadios3" value="option1" checked> 直通
+                    </label>
+                    <label class="radio-inline" style="height: 23px">
+                        <input type="radio" name="optionsRadiosinline" id="optionsRadios4"  value="option2"> 代理
+                    </label>
+                </label>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+<script src="lib/jquery.min.js"></script>
+
+<script src="lib/bootstrap-switch.min.js"></script>
+
+
+<script src="js/util.js"></script>
+<script src="lib/base64.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

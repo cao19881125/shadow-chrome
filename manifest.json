@@ -1,0 +1,23 @@
+{
+   "background": {
+      "scripts": [ "js/background.js" ]
+   },
+   "browser_action": {
+      "default_background": "background.html",
+      "default_icon": "icon.png",
+      "default_popup": "main.html"
+   },
+   "content_security_policy": "script-src 'self' ; object-src 'self' ",
+   "description": "shadowsockets chrome plugin",
+   "icons": {
+      "128": "icon.png",
+      "16": "icon.png",
+      "48": "icon.png"
+   },
+   "key": "IyMg5Li65LqG6Kej5Yaz55qE6Zeu6aKYCiFbaW1hZ2VdKGh0dHBzOi8vZ2l0aHViLmNvbS9jYW8xOTg4MTEyNS9waWN0dXJlX2Nsb3VkL2Jsb2IvbWFzdGVyL3RjcF9mb3J3YXJkX3Byb2JsZW0ucG5nP3Jhdz10cnVlKQoKLSDlhoXnvZHkuLvmnLrlj6/ku6Xnm7TmjqXorr/pl67lpJbnvZHkuLvmnLrvvIhzbmF044CB6Ziy54Gr5aKZ5YWB6K6477yJCi0g5aSW572R5Li75py65LiN6IO955u05o6l6L+e5o6l5YaF572R5Li75py677yI6Ziy54Gr5aKZ5oum5oiq77yJCgojIyMg5LiA6Iis55qE6Kej5Yaz5pa55rOVCi0g",
+   "manifest_version": 2,
+   "name": "shadowsockets-chrome-plugin",
+   "options_page": "settings.html",
+   "permissions": [ "proxy", "storage", "webRequest", "webRequestBlocking", "tabs", "\u003Call_urls>" ],
+   "version": "1.0.0"
+}
