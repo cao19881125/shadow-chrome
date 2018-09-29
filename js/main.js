@@ -1,6 +1,8 @@
 
-
+init();
 function init() {
+
+
     refresh_conbtn_state()
 
     if(localStorage['gfw_wlist'] == null ||
@@ -21,8 +23,30 @@ function init() {
 
 
     refresh_ip_port_input();
+    refresh_global_switch();
+
 }
 
+function refresh_global_switch() {
+
+
+    var is_global_proxy = false
+    if(localStorage['global-proxy'] != null &&
+        localStorage['global-proxy'] == '1'){
+        is_global_proxy = true
+    }
+
+    if(is_global_proxy){
+        $('#global-switch').bootstrapSwitch('state', true, true);
+        $("#radio-div").css('display','none');
+    }else{
+        $('#global-switch').bootstrapSwitch('state', false, false);
+        $("#radio-div").css('display','');
+    }
+
+
+
+}
 
 function refresh_current_domain() {
 
@@ -159,7 +183,9 @@ $('#radio-direct').click(function () {
 
     refresh_final_black_list();
 
-    setproxy()
+    if(localStorage['connected']>0 ){
+        setproxy()
+    }
 
 });
 
@@ -196,7 +222,26 @@ $('#radio-proxy').click(function () {
 
     refresh_final_black_list();
 
-    setproxy()
+    if(localStorage['connected']>0 ){
+        setproxy()
+    }
+});
+
+
+$('#global-switch').on('switchChange.bootstrapSwitch',function (event,state) {
+
+    console.log('bootstrapSwitch' + state)
+    if(state){
+        localStorage['global-proxy'] = 1
+    }else {
+        localStorage['global-proxy'] = 0
+    }
+
+    refresh_global_switch()
+
+    if(localStorage['connected']>0 ){
+        setproxy()
+    }
 });
 
 function refresh_proxy_state() {
@@ -358,7 +403,7 @@ function refresh_gfw_list() {
         localStorage['gfw_blist'] = black_list.toString();
         //localStorage['gfw_blist'] = 'google.com,youtube.com,facebook.com'
 
-        show_msg(true,'更新成功')
+        show_msg(true,'GFW更新成功')
 
         refresh_current_domain()
 
@@ -438,6 +483,14 @@ function setChromeProxy(final_blk_str){
                     'SOCKS ' + localStorage['socks-ip'] + ':' + localStorage['socks-port'] + '; DIRECT;';
 
 
+    var global_proxy_str = ""
+    if(localStorage['global-proxy'] != null &&
+        localStorage['global-proxy'] == '1'){
+        global_proxy_str = "return PROXY;\n"
+    };
+
+
+
     var config = {
         mode: "pac_script",
         pacScript: {
@@ -446,6 +499,8 @@ function setChromeProxy(final_blk_str){
             "var PROXY = '" + proxy_str + "'\n"+
             "var DEFAULT = 'DIRECT';\n"+
             "if (dnsDomainIs(host, \".cn\")||dnsDomainIs(host,\".local\")||/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/i.test(host)){ return DEFAULT; }\n"+
+
+            global_proxy_str +
 
             "var proxy_domains=["+final_blk_str+"];\n"+
             "for(i = 0; i < proxy_domains.length; i++) {\n"+
@@ -458,9 +513,7 @@ function setChromeProxy(final_blk_str){
             "}\n"
         }
     };
-
-
-    console.log(config.pacScript.data)
+    
 
     chrome.proxy.settings.set( {value: config, scope: 'regular'},function() {
 
@@ -470,5 +523,5 @@ function setChromeProxy(final_blk_str){
 
 
 
-init()
+
 

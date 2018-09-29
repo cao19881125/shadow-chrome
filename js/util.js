@@ -5,7 +5,7 @@ $(document).ready(function() {
     //
     // })
 
-    $('#global-switch').bootstrapSwitch('state', false, false);
+    // $('#global-switch').bootstrapSwitch('state', false, false);
     $('.bootstrap-switch-id-global-switch').css('margin-left','10px')
 
     // $(".aj-label").each(function (i, item) {
