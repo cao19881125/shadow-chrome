@@ -249,7 +249,13 @@ $('#global-switch').on('switchChange.bootstrapSwitch',function (event,state) {
 
     if(localStorage['connected']>0 ){
         setproxy()
+
+
+        refresh_proxy_state()
+
     }
+
+
 });
 
 
@@ -279,9 +285,17 @@ function seticon_by_proxy_state(is_direct) {
 }
 
 function refresh_proxy_state() {
+
+    if(localStorage['global-proxy'] >0){
+        seticon_by_proxy_state(false);
+        return
+    }
+
     var current_domain = $('#domain-input').val();
 
     var is_proxy = is_domain_proxy(current_domain);
+
+
 
     if(is_proxy){
         $('#radio-proxy').attr('checked', 'checked');
