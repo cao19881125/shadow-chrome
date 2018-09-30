@@ -6,6 +6,64 @@ function dnsDomainIs(host, pattern) {
   return host.length >= pattern.length && (host === pattern || host.substring(host.length - pattern.length - 1) === '.' + pattern);
 }
 
+ function is_domain_proxy(domain) {
+
+     var gwf_blkstr = localStorage['final_blist'];
+
+     blk_array = gwf_blkstr.split(',');
+
+     for(n in blk_array){
+         if(dnsDomainIs(domain,blk_array[n])){
+             return true
+         }
+     }
+
+     return false
+ }
+
+ function seticon_by_proxy_state(is_direct) {
+
+
+     if(is_direct){
+         chrome.browserAction.setIcon({
+             path: "icon-direct.png"
+         });
+     }else {
+         chrome.browserAction.setIcon({
+             path: "icon-proxy.png"
+         });
+     }
+
+
+
+ }
+
+ chrome.tabs.onActivated.addListener(function(activeInfo) {
+     // how to fetch tab url using activeInfo.tabid
+     chrome.tabs.get(activeInfo.tabId, function(tab){
+         if( localStorage['connected']>0 ){
+             var domaintmp = tab.url.split("/");
+             var domain = domaintmp[2];
+             if(domain.indexOf("www.")==0){
+                 domain = domain.replace("www.","");
+             }
+
+             if(localStorage['global-proxy'] != null &&
+                 localStorage['global-proxy'] == '1'){
+                 seticon_by_proxy_state(false);
+                 return;
+             }
+
+             if(is_domain_proxy(domain)){
+               seticon_by_proxy_state(false);
+             }else {
+               seticon_by_proxy_state(true);
+             }
+
+         }
+
+     });
+ });
 
  // chrome.tabs.onActivated.addListener(function(activeInfo) {
  //     // how to fetch tab url using activeInfo.tabid

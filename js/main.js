@@ -131,6 +131,8 @@ if( $("#connectbtn").length ){
         connect();
 
         refresh_ip_port_input();
+
+        refresh_proxy_state()
     });
 }
 
@@ -144,6 +146,8 @@ if( $("#disconnect").length ){
         removeProxy();
 
         refresh_ip_port_input();
+
+        refresh_proxy_state()
     });
 }
 
@@ -187,6 +191,8 @@ $('#radio-direct').click(function () {
         setproxy()
     }
 
+    seticon_by_proxy_state(true)
+
 });
 
 $('#radio-proxy').click(function () {
@@ -225,12 +231,14 @@ $('#radio-proxy').click(function () {
     if(localStorage['connected']>0 ){
         setproxy()
     }
+
+    seticon_by_proxy_state(false)
 });
 
 
 $('#global-switch').on('switchChange.bootstrapSwitch',function (event,state) {
 
-    console.log('bootstrapSwitch' + state)
+    //console.log('bootstrapSwitch' + state)
     if(state){
         localStorage['global-proxy'] = 1
     }else {
@@ -244,6 +252,32 @@ $('#global-switch').on('switchChange.bootstrapSwitch',function (event,state) {
     }
 });
 
+
+function seticon_by_proxy_state(is_direct) {
+
+    if(localStorage['connected'] ==null ||
+        localStorage['connected'] == 0){
+        chrome.browserAction.setIcon({
+            path: "icon.png"
+        });
+
+        return
+    }
+
+    if(is_direct){
+        chrome.browserAction.setIcon({
+            path: "icon-direct.png"
+        });
+    }else {
+        chrome.browserAction.setIcon({
+            path: "icon-proxy.png"
+        });
+    }
+
+
+
+}
+
 function refresh_proxy_state() {
     var current_domain = $('#domain-input').val();
 
@@ -251,8 +285,10 @@ function refresh_proxy_state() {
 
     if(is_proxy){
         $('#radio-proxy').attr('checked', 'checked');
+        seticon_by_proxy_state(false)
     }else {
         $('#radio-direct').attr('checked', 'checked');
+        seticon_by_proxy_state(true)
     }
 }
 
@@ -513,7 +549,7 @@ function setChromeProxy(final_blk_str){
             "}\n"
         }
     };
-    
+
 
     chrome.proxy.settings.set( {value: config, scope: 'regular'},function() {
 
