@@ -38,31 +38,43 @@ function dnsDomainIs(host, pattern) {
 
  }
 
+ function set_icon_by_tab(tab) {
+     if( localStorage['connected']>0 ){
+         var domaintmp = tab.url.split("/");
+         var domain = domaintmp[2];
+         if(domain.indexOf("www.")==0){
+             domain = domain.replace("www.","");
+         }
+
+         if(localStorage['global-proxy'] != null &&
+             localStorage['global-proxy'] == '1'){
+             seticon_by_proxy_state(false);
+             return;
+         }
+
+         if(is_domain_proxy(domain)){
+             seticon_by_proxy_state(false);
+         }else {
+             seticon_by_proxy_state(true);
+         }
+
+     }
+ }
+
  chrome.tabs.onActivated.addListener(function(activeInfo) {
      // how to fetch tab url using activeInfo.tabid
      chrome.tabs.get(activeInfo.tabId, function(tab){
-         if( localStorage['connected']>0 ){
-             var domaintmp = tab.url.split("/");
-             var domain = domaintmp[2];
-             if(domain.indexOf("www.")==0){
-                 domain = domain.replace("www.","");
-             }
+       set_icon_by_tab(tab)
 
-             if(localStorage['global-proxy'] != null &&
-                 localStorage['global-proxy'] == '1'){
-                 seticon_by_proxy_state(false);
-                 return;
-             }
-
-             if(is_domain_proxy(domain)){
-               seticon_by_proxy_state(false);
-             }else {
-               seticon_by_proxy_state(true);
-             }
-
-         }
 
      });
+ });
+
+
+
+ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
+     set_icon_by_tab(tab)
+     
  });
 
  // chrome.tabs.onActivated.addListener(function(activeInfo) {
