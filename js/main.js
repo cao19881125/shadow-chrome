@@ -529,9 +529,10 @@ function setproxy(){
 function setChromeProxy(final_blk_str){
 
 
-    var proxy_str = 'SOCKS5 ' + localStorage['socks-ip'] + ':' + localStorage['socks-port'] + '; ' +
-                    'SOCKS ' + localStorage['socks-ip'] + ':' + localStorage['socks-port'] + '; DIRECT;';
+    // var proxy_str = 'SOCKS5 ' + localStorage['socks-ip'] + ':' + localStorage['socks-port'] + '; ' +
+    //                 'SOCKS ' + localStorage['socks-ip'] + ':' + localStorage['socks-port'] + '; DIRECT;';
 
+    var proxy_str = 'PROXY ' + localStorage['socks-ip'] + ':' + localStorage['socks-port'];
 
     var global_proxy_str = ""
     if(localStorage['global-proxy'] != null &&
