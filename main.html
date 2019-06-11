@@ -25,6 +25,17 @@
             连接设置
         </div>
         <div class="panel-body" style="padding: 10px">
+            <div id="proto-radio-div" style="margin-top: 5px" >
+                <label >
+                    代理协议
+                    <label class="radio-inline" style="height: 23px;margin-left: 15px" >
+                        <input type="radio" name="optionsRadiosinProto" id="proto-radio-socks" value="option1" checked> SOCKS5
+                    </label>
+                    <label class="radio-inline" style="height: 23px">
+                        <input type="radio" name="optionsRadiosinProto" id="proto-radio-https"  value="option2"> HTTPS
+                    </label>
+                </label>
+            </div>
             <div class="input-group input-group-sm">
                 <span class="input-group-addon " style="width: 40%">sock IP</span>
                 <input type="text"  id="input-ip" class="form-control" placeholder="socks ip" value="127.0.0.1">

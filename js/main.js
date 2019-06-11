@@ -25,6 +25,20 @@ function init() {
     refresh_ip_port_input();
     refresh_global_switch();
 
+    init_proto_radio();
+
+    
+}
+
+function init_proto_radio() {
+
+    if(localStorage['proxy-proto'] == 'socks5'){
+        $('#proto-radio-socks').attr('checked', 'checked');
+    }else {
+        $('#proto-radio-https').attr('checked', 'checked');
+    }
+
+    refresh_proto_state();
 }
 
 function refresh_global_switch() {
@@ -111,6 +125,7 @@ function show_msg(success,msg) {
 if( $("#connectbtn").length ){
     document.getElementById('connectbtn').addEventListener('click', function() {
 
+
         localStorage['connected']=1;
         refresh_conbtn_state()
 
@@ -128,11 +143,21 @@ if( $("#connectbtn").length ){
         localStorage['socks-ip'] = $('#input-ip').val()
         localStorage['socks-port'] = $('#input-port').val()
 
+        if ($('#proto-radio-socks').is(':checked')){
+            localStorage['proxy-proto'] = 'socks5';
+        }else if($('#proto-radio-https').is(':checked')){
+            localStorage['proxy-proto'] = 'https';
+        }
+
+
         connect();
 
         refresh_ip_port_input();
 
-        refresh_proxy_state()
+        refresh_proxy_state();
+
+        refresh_proto_state();
+
     });
 }
 
@@ -147,7 +172,9 @@ if( $("#disconnect").length ){
 
         refresh_ip_port_input();
 
-        refresh_proxy_state()
+        refresh_proxy_state();
+
+        refresh_proto_state();
     });
 }
 
@@ -281,6 +308,18 @@ function seticon_by_proxy_state(is_direct) {
     }
 
 
+
+}
+
+function refresh_proto_state() {
+
+    if(localStorage['connected']>0 ){
+        $('#proto-radio-socks').attr('disabled',true);
+        $('#proto-radio-https').attr('disabled',true);
+    }else{
+        $('#proto-radio-socks').attr('disabled',false);
+        $('#proto-radio-https').attr('disabled',false);
+    }
 
 }
 
@@ -532,7 +571,18 @@ function setChromeProxy(final_blk_str){
     // var proxy_str = 'SOCKS5 ' + localStorage['socks-ip'] + ':' + localStorage['socks-port'] + '; ' +
     //                 'SOCKS ' + localStorage['socks-ip'] + ':' + localStorage['socks-port'] + '; DIRECT;';
 
-    var proxy_str = 'PROXY ' + localStorage['socks-ip'] + ':' + localStorage['socks-port'];
+
+    if (localStorage['proxy-proto'] == 'socks5'){
+        var proxy_str = 'SOCKS5 ' + localStorage['socks-ip'] + ':' + localStorage['socks-port'] + '; ' +
+                        'SOCKS ' + localStorage['socks-ip'] + ':' + localStorage['socks-port'] + '; DIRECT;';
+    }else {
+        var proxy_str = 'PROXY ' + localStorage['socks-ip'] + ':' + localStorage['socks-port'];
+    }
+
+
+    //var proxy_str = 'PROXY ' + localStorage['socks-ip'] + ':' + localStorage['socks-port'];
+
+    console.log(proxy_str)
 
     var global_proxy_str = ""
     if(localStorage['global-proxy'] != null &&
