@@ -1,53 +1,5 @@
-# 1.安装shadowsocks client
-## macos & linux
-### 安装shadowsocks client
-```
-pip install shadowsocks
-```
-
-#### config file
-
-```
-# cat /etc/shadowsocks.json
-{
-        "server":"SHADOWSOCKS-SERVER-IP",
-        "server_port": PORT,
-        "local_address": "127.0.0.1",
-        "local_port": 1080,
-        "password":"PASSWORD",
-        "timeout":300,
-        "method":"aes-256-cfb"
-}
-```
-- SHADOWSOCKS-SERVER-IP:服务器的IP地址
-- PORT：端口
-- PASSWORD:密码
-
-#### 启动
-
-```
-sslocal -c /etc/shadowsocks.json -d start
-```
-
-## windows
-
-### 安装shadowsocks client
-> 下载地址：https://github.com/shadowsocks/shadowsocks-windows/releases/download/4.1.2/Shadowsocks-4.1.2.zip
-
-- 下载之后解压运行压缩包里面的Shadowsocks.exe
-
-- 按照如下配置服务器
-
-```
-服务器地址:SHADOWSOCKS-SERVER-IP
-服务器端口:PORT
-密码:PASSWORD
-加密:aes-256-cfb
-```
-
-- 可以设置开机自启动
-
-# 2.安装shadow-chrome 插件
+Chrome插件，支持socks5协议和http协议代理设置，GFW自动更新默认黑名单走代理，可手动设置需要的域名走代理或者直通
+# 安装shadow-chrome 插件
 
 ## 下载插件代码
 
